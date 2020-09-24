@@ -14,6 +14,10 @@ public class AddressBookMain {
 		long phone_number;
 		int zip;
 		
+		System.out.println("Do you want to add contact to address book");
+		String ans=s.next();
+		
+		while(ans.equals("yes")) {
 		System.out.println("Enter details for creating and adding contact");
 		
 		System.out.println("Enter first name");
@@ -38,10 +42,14 @@ public class AddressBookMain {
 		
 		addbookobject.addContact(contactobject);
 		System.out.println("Contact Added Successfully");
+		System.out.println("Do you want to add contact to address book");
+	    ans=s.next();
+		
+		}
 		
 		System.out.println("Do you want to edit details(yes/no)");
-		String ans=s.next();
-		if(ans.equals("yes")) {
+		String ans1=s.next();
+		if(ans1.equals("yes")) {
 			System.out.println("Enter the first name of person for editing");
 			addbookobject.editContact(s.next());
 			System.out.println("details editted");
