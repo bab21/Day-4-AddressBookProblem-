@@ -10,9 +10,9 @@ public class Contact {
 	private int phone_number;
 	private String email;
 	
-	public static void main(String[] args) {
-		System.out.println("check");
-	}
+//	public static void main(String[] args) {
+//		System.out.println("check");
+//	}
 	
 	public void setFirst_Name(String first_name) {
 		this.first_name=first_name;
