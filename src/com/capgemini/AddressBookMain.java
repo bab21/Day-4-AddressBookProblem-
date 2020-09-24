@@ -48,6 +48,13 @@ public class AddressBookMain {
 			
 		}
 		
+		System.out.println("Do you want to delete any Contact(yes/no)");
+		String ans2=s.next();
+		if(ans2.equals("yes")) {
+			System.out.println("Enter the first name of person for deleting");
+			addbookobject.deleteContact(s.next());
+		}
+		
 		
 		
 		s.close();	
