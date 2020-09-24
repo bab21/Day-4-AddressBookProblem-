@@ -5,8 +5,18 @@ import java.util.Scanner;
 public class AddressBookMain {
 	
 	public static void main(String[] args) {
+		
 		System.out.println("Welcome to Address Book Program.");
 		Scanner s=new Scanner(System.in);
+		System.out.println("Do you want to create new address book");
+		String ans0=s.next();
+		if(ans0.equals("yes")) {
+			System.out.println("Enter name of address book to be created");
+			String name=s.next();
+			AddressBook obj=new AddressBook();
+			
+			AddressBook.hm.put(name, obj);
+		}
 		
 		AddressBook addbookobject=new AddressBook();
 		

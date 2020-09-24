@@ -3,11 +3,21 @@ import java.util.*;
 
 
 public class AddressBook {
+	public static Map<String,AddressBook> hm= new HashMap<String, AddressBook>(); 
+	
 	ArrayList<Contact> contact_list;
+	String addressBookName;
+	
 	
 	public AddressBook() {
 		contact_list=new ArrayList<Contact>();
 	}
+	public AddressBook(String addressBookName) {
+		contact_list=new ArrayList<Contact>();
+		this.addressBookName=addressBookName;
+		
+	}
+	
    
 	public  Contact createContact(String first_name,String last_name,String address,String city,String state,int zip,long phone_number,String email){
 		Contact contact=new Contact();
