@@ -1,8 +1,15 @@
 package com.capgemini;
+import java.util.*;
+
 
 public class AddressBook {
-
-	public  Contact createContact(String first_name,String last_name,String address,String city,String state,int zip,int phone_number,String email){
+	ArrayList<Contact> contact_list;
+	
+	public AddressBook() {
+		contact_list=new ArrayList<Contact>();
+	}
+   
+	public  Contact createContact(String first_name,String last_name,String address,String city,String state,int zip,long phone_number,String email){
 		Contact contact=new Contact();
 		contact.setFirst_Name(first_name);
 		contact.setLast_Name(last_name);
@@ -16,4 +23,8 @@ public class AddressBook {
 		return contact;
 	}
 	
+	public void addContact(Contact contact) {
+		this.contact_list.add(contact);
+		
+	}
 }
