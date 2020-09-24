@@ -8,6 +8,8 @@ public class AddressBookMain {
 		System.out.println("Welcome to Address Book Program.");
 		Scanner s=new Scanner(System.in);
 		
+		AddressBook addbookobject=new AddressBook();
+		
 		String first_name,last_name,address,city,state,email;
 		long phone_number;
 		int zip;
@@ -31,12 +33,23 @@ public class AddressBookMain {
 		System.out.println("Enter zip code");
 		zip=s.nextInt();
 //		
-       	AddressBook addbookobject=new AddressBook();
+       	
 		Contact contactobject=addbookobject.createContact(first_name, last_name, address, city, state, zip, phone_number, email);
 		
 		addbookobject.addContact(contactobject);
-		
 		System.out.println("Contact Added Successfully");
+		
+		System.out.println("Do you want to edit details(yes/no)");
+		String ans=s.next();
+		if(ans.equals("yes")) {
+			System.out.println("Enter the first name of person for editing");
+			addbookobject.editContact(s.next());
+			System.out.println("details editted");
+			
+		}
+		
+		
+		
 		s.close();	
 		
 	}
