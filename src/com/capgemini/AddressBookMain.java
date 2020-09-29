@@ -22,11 +22,13 @@ public class AddressBookMain {
 			System.out.println("5. Create a new  address book");
 			System.out.println("6. Search Contact by City Name");
 			System.out.println("7. Search Contact by State name");
-			System.out.println("8. Exit");
+			System.out.println("8. Number of Persons by City Name");
+			System.out.println("9. Number of Persons by State Name");
+			System.out.println("10. Exit");
 			
 			System.out.println("Enter your choice");
 			int choice=s.nextInt();
-			if(choice==8)
+			if(choice==10)
 				break;
 			
 			switch(choice) {
@@ -71,6 +73,12 @@ public class AddressBookMain {
 			       String state=s.next();
 			       search_by_state_name(state);
 			       break;
+			case 8:System.out.println("Enter city name");
+				   System.out.println(citytocontact.get(s.next()).size());
+				   break;
+			case 9:System.out.println("Enter state name");
+				   System.out.println(statetocontact.get(s.next()).size());
+				   break;
 		    default:System.out.println("Do nothing");	
 		    	    break;
 			}
@@ -105,6 +113,7 @@ public class AddressBookMain {
         	System.out.println("First Name : "+contacts.get(i).getFirst_Name()+" Last Name : "+contacts.get(i).getLast_Name());
         }		
 	}
+	
 	
 
 }
