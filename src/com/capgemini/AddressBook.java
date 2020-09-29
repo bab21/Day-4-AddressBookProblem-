@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 
 public class AddressBook {
+	
 	public static Map<String,AddressBook> hm= new HashMap<String, AddressBook>(); 
 	
 	ArrayList<Contact> contact_list;
@@ -55,6 +56,23 @@ public class AddressBook {
 		}
 		else
 			this.contact_list.add(contact);
+		
+		
+		if(AddressBookMain.citytocontact.containsKey(contact.getCity())) {
+			AddressBookMain.citytocontact.get(contact.getCity()).add(contact);
+		}
+		else {
+			AddressBookMain.citytocontact.put(contact.getCity(), new ArrayList<Contact>());
+			AddressBookMain.citytocontact.get(contact.getCity()).add(contact);
+		}
+		
+		if(AddressBookMain.statetocontact.containsKey(contact.getState()))
+			AddressBookMain.statetocontact.get(contact.getState()).add(contact);
+		else {
+			AddressBookMain.statetocontact.put(contact.getState(), new ArrayList<Contact>());
+			AddressBookMain.statetocontact.get(contact.getState()).add(contact);	
+		}
+		
 	}
 	public void editContact() {
 		

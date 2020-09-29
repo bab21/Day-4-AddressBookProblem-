@@ -4,8 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookMain {
+	public static Map<String,List<Contact>> citytocontact= new HashMap<String,List<Contact>>(); 
+	public static Map<String,List<Contact>> statetocontact= new HashMap<String,List<Contact>>(); 
 	
 	public static void main(String[] args) {
+		
 		
 		System.out.println("Welcome to Address Book Program.");
 		Scanner s=new Scanner(System.in);
@@ -84,27 +87,23 @@ public class AddressBookMain {
 		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet())  
             System.out.println(entry.getKey()); 
 	}
+	
 	public static void search_by_city_name(String city) {
 		
-		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet()) {
-            System.out.println("Contacts for book : "+entry.getKey()); 
-            List<Contact> addressbookcontact=entry.getValue().contact_list.stream().filter(c->c.getCity().equals(city)).collect(Collectors.toList()); 
-            for(int i=0;i<addressbookcontact.size();i++) {
-            	System.out.println("First Name :"+addressbookcontact.get(i).getFirst_Name()+" Last Name : "+addressbookcontact.get(i).getLast_Name());
-            }
-		}
+		List<Contact> contacts=citytocontact.get(city);
+		for(int i=0;i<contacts.size();i++) {
+        	System.out.println("First Name : "+contacts.get(i).getFirst_Name()+" Last Name : "+contacts.get(i).getLast_Name());
+        }
+		
 		
 	}
+	
 	public static void search_by_state_name(String state) {
-			
-			for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet()) {
-	            System.out.println("Contacts for book : "+entry.getKey()); 
-	            List<Contact> addressbookcontact=entry.getValue().contact_list.stream().filter(c->c.getState().equals(state)).collect(Collectors.toList()); 
-	            for(int i=0;i<addressbookcontact.size();i++) {
-	            	System.out.println("First Name : "+addressbookcontact.get(i).getFirst_Name()+" Last Name : "+addressbookcontact.get(i).getLast_Name());
-	            }
-			}
-			
+		
+		List<Contact> contacts=statetocontact.get(state);
+		for(int i=0;i<contacts.size();i++) {
+        	System.out.println("First Name : "+contacts.get(i).getFirst_Name()+" Last Name : "+contacts.get(i).getLast_Name());
+        }		
 	}
 	
 
