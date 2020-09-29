@@ -1,6 +1,7 @@
 package com.capgemini;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookMain {
 	
@@ -16,11 +17,13 @@ public class AddressBookMain {
 			System.out.println("3. Delete a person details in particular address book");
 			System.out.println("4. Show all contacts in particular address book");
 			System.out.println("5. Create a new  address book");
-			System.out.println("6. Exit");
+			System.out.println("6. Search Contact by City Name");
+			System.out.println("7. Search Contact by State name");
+			System.out.println("8. Exit");
 			
 			System.out.println("Enter your choice");
 			int choice=s.nextInt();
-			if(choice==6)
+			if(choice==8)
 				break;
 			
 			switch(choice) {
@@ -57,6 +60,14 @@ public class AddressBookMain {
 				   AddressBook.hm.put(name,addressbook);
 				   System.out.println("Address Book created successfully");
 				   break;
+			case 6:System.out.println("Enter the city name");
+				   String city=s.next();
+				   search_by_city_name(city);
+				   break;
+			case 7:System.out.println("Enter the state name");
+			       String state=s.next();
+			       search_by_state_name(state);
+			       break;
 		    default:System.out.println("Do nothing");	
 		    	    break;
 			}
@@ -73,5 +84,28 @@ public class AddressBookMain {
 		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet())  
             System.out.println(entry.getKey()); 
 	}
+	public static void search_by_city_name(String city) {
+		
+		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet()) {
+            System.out.println("Contacts for book : "+entry.getKey()); 
+            List<Contact> addressbookcontact=entry.getValue().contact_list.stream().filter(c->c.getCity().equals(city)).collect(Collectors.toList()); 
+            for(int i=0;i<addressbookcontact.size();i++) {
+            	System.out.println("First Name :"+addressbookcontact.get(i).getFirst_Name()+" Last Name : "+addressbookcontact.get(i).getLast_Name());
+            }
+		}
+		
+	}
+	public static void search_by_state_name(String state) {
+			
+			for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet()) {
+	            System.out.println("Contacts for book : "+entry.getKey()); 
+	            List<Contact> addressbookcontact=entry.getValue().contact_list.stream().filter(c->c.getState().equals(state)).collect(Collectors.toList()); 
+	            for(int i=0;i<addressbookcontact.size();i++) {
+	            	System.out.println("First Name : "+addressbookcontact.get(i).getFirst_Name()+" Last Name : "+addressbookcontact.get(i).getLast_Name());
+	            }
+			}
+			
+	}
+	
 
 }
