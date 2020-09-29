@@ -1,6 +1,6 @@
 package com.capgemini;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookMain {
 	
@@ -8,76 +8,70 @@ public class AddressBookMain {
 		
 		System.out.println("Welcome to Address Book Program.");
 		Scanner s=new Scanner(System.in);
-		System.out.println("Do you want to create new address book");
-		String ans0=s.next();
-		if(ans0.equals("yes")) {
-			System.out.println("Enter name of address book to be created");
-			String name=s.next();
-			AddressBook obj=new AddressBook();
+		
+		
+		do {
+			System.out.println("1. Add a person details in particular address book");
+			System.out.println("2. Edit a person details in particular address book");
+			System.out.println("3. Delete a person details in particular address book");
+			System.out.println("4. Show all contacts in particular address book");
+			System.out.println("5. Create a new  address book");
+			System.out.println("6. Exit");
 			
-			AddressBook.hm.put(name, obj);
-		}
-		
-		AddressBook addbookobject=new AddressBook();
-		
-		String first_name,last_name,address,city,state,email;
-		long phone_number;
-		int zip;
-		
-		System.out.println("Do you want to add contact to address book");
-		String ans=s.next();
-		
-		while(ans.equals("yes")) {
-		System.out.println("Enter details for creating and adding contact");
-		
-		System.out.println("Enter first name");
-		first_name=s.next();
-		System.out.println("Enter last name");
-		last_name=s.next();
-		System.out.println("Enter address");
-		address=s.next();
-		System.out.println("Enter city name");
-		city=s.next();
-		System.out.println("Enter state name");
-		state=s.next();
-		System.out.println("Enter email address");
-		email=s.next();
-		System.out.println("Enter phone number");
-		phone_number=s.nextLong();
-		System.out.println("Enter zip code");
-		zip=s.nextInt();
-//		
-       	
-		Contact contactobject=addbookobject.createContact(first_name, last_name, address, city, state, zip, phone_number, email);
-		
-		addbookobject.addContact(contactobject);
-		System.out.println("Contact Added Successfully");
-		System.out.println("Do you want to add contact to address book");
-	    ans=s.next();
-		
-		}
-		
-		System.out.println("Do you want to edit details(yes/no)");
-		String ans1=s.next();
-		if(ans1.equals("yes")) {
-			System.out.println("Enter the first name of person for editing");
-			addbookobject.editContact(s.next());
-			System.out.println("details editted");
+			System.out.println("Enter your choice");
+			int choice=s.nextInt();
+			if(choice==6)
+				break;
+			
+			switch(choice) {
+			case 1:show_all_address_books_name();
+				   System.out.println("Enter the name of particular address book to add person details");
+				   String addressBook_name1=s.next();
+				   AddressBook addressbook1=AddressBook.hm.get(addressBook_name1);
+				   Contact contact=addressbook1.createContact();
+				   addressbook1.addContact(contact);
+				   break;
+			case 2:show_all_address_books_name();
+			       System.out.println("Enter the name of particular address book to edit person details");
+			       String addressBook_name2=s.next();
+			       AddressBook addressbook2=AddressBook.hm.get(addressBook_name2);
+			       addressbook2.editContact();
+			       System.out.println("Editing done");
+			       break;
+			case 3:show_all_address_books_name();
+			   	   System.out.println("Enter the name of particular address book to add person details");
+			       String addressBook_name3=s.next();
+			       AddressBook addressbook3=AddressBook.hm.get(addressBook_name3);
+			       addressbook3.deleteContact();
+			       System.out.println("deletion done");
+			       break;
+			case 4:show_all_address_books_name();
+		   	       System.out.println("Enter the name of particular address book to add person details");
+		           String addressBook_name4=s.next();
+		           AddressBook addressbook4=AddressBook.hm.get(addressBook_name4);
+		           addressbook4.showContacts();
+		           break;
+			case 5:System.out.println("Enter name of address book to be created");
+				   String name=s.next();
+				   AddressBook addressbook=new AddressBook(name);
+				   AddressBook.hm.put(name,addressbook);
+				   System.out.println("Address Book created successfully");
+				   break;
+		    default:System.out.println("Do nothing");	
+		    	    break;
+			}
+			
 			
 		}
+	    while(true);
 		
-		System.out.println("Do you want to delete any Contact(yes/no)");
-		String ans2=s.next();
-		if(ans2.equals("yes")) {
-			System.out.println("Enter the first name of person for deleting");
-			addbookobject.deleteContact(s.next());
-		}
-		
-		
-		
-		s.close();	
 		
 	}
 	
+	public static void show_all_address_books_name() {
+		
+		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet())  
+            System.out.println(entry.getKey()); 
+	}
 
 }

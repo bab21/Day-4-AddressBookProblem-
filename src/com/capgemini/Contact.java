@@ -10,9 +10,30 @@ public class Contact {
 	private long phone_number;
 	private String email;
 	
-//	public static void main(String[] args) {
-//		System.out.println("check");
-//	}
+	
+	public Contact(String first_name,String last_name,String address,String city,String state,int zip,long phone_number,String email) {
+		this.first_name=first_name;
+		this.last_name=last_name;
+		this.address=address;
+		this.city=city;
+		this.state=state;
+		this.zip=zip;
+		this.phone_number=phone_number;
+		this.email=email;
+	}
+	public boolean equals(Object object) {
+		if (object == this) { 
+            return true; 
+        } 
+  
+        if (!(object instanceof Contact)) { 
+            return false; 
+        } 
+        Contact contact = (Contact) object; 
+        if(this.first_name.equals(contact.first_name))
+        	return true;
+        else return false;		
+	}
 	
 	public void setFirst_Name(String first_name) {
 		this.first_name=first_name;

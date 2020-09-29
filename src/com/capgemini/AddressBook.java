@@ -1,5 +1,6 @@
 package com.capgemini;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class AddressBook {
@@ -19,26 +20,47 @@ public class AddressBook {
 	}
 	
    
-	public  Contact createContact(String first_name,String last_name,String address,String city,String state,int zip,long phone_number,String email){
-		Contact contact=new Contact();
-		contact.setFirst_Name(first_name);
-		contact.setLast_Name(last_name);
-		contact.setAddress(address);
-		contact.setCity(city);
-		contact.setState(state);
-		contact.setZip(zip);
-		contact.setPhoneNumber(phone_number);
-		contact.setEmail(email);
+	public  Contact createContact(){
+        System.out.println("Enter details for creating and adding contact");
+		Scanner s=new Scanner(System.in);
+		
+		System.out.println("Enter first name");
+		String first_name=s.next();
+		System.out.println("Enter last name");
+		String last_name=s.next();
+		System.out.println("Enter address");
+		String address=s.next();
+		System.out.println("Enter city name");
+		String city=s.next();
+		System.out.println("Enter state name");
+		String state=s.next();
+		System.out.println("Enter email address");
+		String email=s.next();
+		System.out.println("Enter phone number");
+		long phone_number=s.nextLong();
+		System.out.println("Enter zip code");
+		int zip=s.nextInt();
+		
+		Contact contact=new Contact(first_name,last_name,address,city,state,zip,phone_number,email);
+		
 		
 		return contact;
 	}
 	
 	public void addContact(Contact contact) {
-		this.contact_list.add(contact);
-		
+		List<Contact> result = contact_list.stream().filter(c->c.equals(contact)).collect(Collectors.toList()); 
+		if(result.size()>0)
+		{
+			System.out.println("This contact already exits in this particular address book");
+		}
+		else
+			this.contact_list.add(contact);
 	}
-	public void editContact(String first_name) {
+	public void editContact() {
+		
 		Scanner s=new Scanner(System.in);
+		System.out.println("Enter first name of contact to be edited");
+		String first_name=s.next();
 		
 		int index=0;
 		int i,n;
@@ -63,7 +85,7 @@ public class AddressBook {
 		int choice=s.nextInt();
 		
 		if(choice==8)
-			break;
+			return;
 		
 		switch(choice) {
 		case 1:System.out.println("Enter last name for editing");
@@ -89,16 +111,14 @@ public class AddressBook {
 			   break;
 		   	   
 		}
-		}
-		s.close();
-		
-		
-		
+		}	
 	}
-	public void deleteContact(String first_name) {
+	public void deleteContact() {
 		int index=0;
 		int i,n;
-		
+		Scanner s=new Scanner(System.in);
+		System.out.println("Enter name of contact to be deleted");
+		String first_name=s.next();
 		n=contact_list.size();
 		
 		for(i=0;i<n;i++) {
@@ -107,6 +127,14 @@ public class AddressBook {
 			
 		}
 		contact_list.remove(index);
-		System.out.println("Contact deleted");
+		return ;
+	}
+	public void showContacts() {
+		
+		for(int i=0;i<contact_list.size();i++) {
+			Contact c=contact_list.get(i);
+			System.out.println("First Name "+c.getFirst_Name()+" Last Name "+c.getLast_Name()+" Address:"+c.getAddress()+" City :"+c.getCity()+" State: "+c.getState()+" Phone :"+c.getPhoneNumber()+" Email:"+c.getEmail()+" Zip: "+c.getZip());
+		}
+		
 	}
 }
