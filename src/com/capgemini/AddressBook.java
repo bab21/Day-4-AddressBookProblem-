@@ -162,5 +162,26 @@ public class AddressBook {
          .map(contact->contact.toString())
          .forEach(System.out::println); 
 	}
+	public static void getSortedContactListByCity(String AddressBookName){
+		hm.get(AddressBookName).contact_list
+		 .stream() 
+        .sorted((c1, c2)->c1.getCity().compareTo(c2.getCity())) 
+        .map(contact->contact.toString())
+        .forEach(System.out::println); 
+	}
+	public static void getSortedContactListByState(String AddressBookName){
+		hm.get(AddressBookName).contact_list
+		 .stream() 
+        .sorted((c1, c2)->c1.getState().compareTo(c2.getState())) 
+        .map(contact->contact.toString())
+        .forEach(System.out::println); 
+	}
+	public static void getSortedContactListByZip(String AddressBookName) {
+		hm.get(AddressBookName).contact_list
+		 .stream() 
+       .sorted((c1, c2)->((Integer)c1.getZip()).compareTo((Integer)c2.getZip())) 
+       .map(contact->contact.toString())
+       .forEach(System.out::println); 
+	}
 	
 }

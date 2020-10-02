@@ -24,12 +24,15 @@ public class AddressBookMain {
 			System.out.println("7. Search Contact by State name");
 			System.out.println("8. Number of Persons by City Name");
 			System.out.println("9. Number of Persons by State Name");
-			System.out.println("10.Get sorted contacts in a address book");
-			System.out.println("11. Exit");
+			System.out.println("10.Get sorted contacts By Name in a address book");
+			System.out.println("11.Get sorted contacts By City in a address book");
+			System.out.println("12.Get sorted contacts By State in a address book");
+			System.out.println("13.Get sorted contacts By Zip in a address book");
+			System.out.println("14. Exit");
 			
 			System.out.println("Enter your choice");
 			int choice=s.nextInt();
-			if(choice==11)
+			if(choice==14)
 				break;
 			
 			switch(choice) {
@@ -84,11 +87,22 @@ public class AddressBookMain {
 				    System.out.println("Enter address book");
 				    AddressBook.getSortedContactListByName(s.next());
 				    break;
+			case 11:show_all_address_books_name();
+				    System.out.println("Enter address book");
+				    AddressBook.getSortedContactListByCity(s.next());
+				    break;
+			case 12:show_all_address_books_name();
+				    System.out.println("Enter address book");
+				    AddressBook.getSortedContactListByState(s.next());
+				    break;
+			case 13:show_all_address_books_name();
+				    System.out.println("Enter address book");
+				    AddressBook.getSortedContactListByZip(s.next());
+				    break;
+		    
 		    default:System.out.println("Do nothing");	
 		    	    break;
-			}
-			
-			
+			}	
 		}
 	    while(true);
 		
