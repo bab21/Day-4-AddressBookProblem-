@@ -24,11 +24,12 @@ public class AddressBookMain {
 			System.out.println("7. Search Contact by State name");
 			System.out.println("8. Number of Persons by City Name");
 			System.out.println("9. Number of Persons by State Name");
-			System.out.println("10. Exit");
+			System.out.println("10.Get sorted contacts in a address book");
+			System.out.println("11. Exit");
 			
 			System.out.println("Enter your choice");
 			int choice=s.nextInt();
-			if(choice==10)
+			if(choice==11)
 				break;
 			
 			switch(choice) {
@@ -79,6 +80,10 @@ public class AddressBookMain {
 			case 9:System.out.println("Enter state name");
 				   System.out.println(statetocontact.get(s.next()).size());
 				   break;
+			case 10:show_all_address_books_name();
+				    System.out.println("Enter address book");
+				    AddressBook.getSortedContactListByName(s.next());
+				    break;
 		    default:System.out.println("Do nothing");	
 		    	    break;
 			}
@@ -99,19 +104,13 @@ public class AddressBookMain {
 	public static void search_by_city_name(String city) {
 		
 		List<Contact> contacts=citytocontact.get(city);
-		for(int i=0;i<contacts.size();i++) {
-        	System.out.println("First Name : "+contacts.get(i).getFirst_Name()+" Last Name : "+contacts.get(i).getLast_Name());
-        }
-		
-		
+		contacts.stream().map(contact -> contact.toString()).forEach(System.out::println); 
 	}
 	
 	public static void search_by_state_name(String state) {
 		
 		List<Contact> contacts=statetocontact.get(state);
-		for(int i=0;i<contacts.size();i++) {
-        	System.out.println("First Name : "+contacts.get(i).getFirst_Name()+" Last Name : "+contacts.get(i).getLast_Name());
-        }		
+		contacts.stream().map(contact -> contact.toString()).forEach(System.out::println); 	
 	}
 	
 	

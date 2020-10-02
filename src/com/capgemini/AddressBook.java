@@ -155,4 +155,12 @@ public class AddressBook {
 		}
 		
 	}
+	public  static void getSortedContactListByName(String AddressBookName) {
+		 hm.get(AddressBookName).contact_list
+		 .stream() 
+         .sorted((c1, c2)->c1.getFirst_Name().compareTo(c2.getFirst_Name())) 
+         .map(contact->contact.toString())
+         .forEach(System.out::println); 
+	}
+	
 }
