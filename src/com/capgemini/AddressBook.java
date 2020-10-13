@@ -1,22 +1,39 @@
 package com.capgemini;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.IntStream;
 
 
 public class AddressBook {
 	
 	public static Map<String,AddressBook> hm= new HashMap<String, AddressBook>(); 
+	public static String HOME=System.getProperty("user.dir");
 	
-	ArrayList<Contact> contact_list;
+	
+	ArrayList<Contact> contactList;
 	String addressBookName;
-	
+	String ADDRESS_BOOK_FILE;
 	
 	public AddressBook() {
-		contact_list=new ArrayList<Contact>();
+		contactList=new ArrayList<Contact>();
 	}
-	public AddressBook(String addressBookName) {
-		contact_list=new ArrayList<Contact>();
+	public AddressBook(String addressBookName)  throws IOException{
+		contactList=new ArrayList<Contact>();
 		this.addressBookName=addressBookName;
+		this.ADDRESS_BOOK_FILE=HOME+"/"+addressBookName;
+		Path addressBookPath=Paths.get(ADDRESS_BOOK_FILE);
+		try {
+		Files.createFile(addressBookPath);
+		}
+		catch(IOException e) {
+			System.out.println("File not accessible");
+		}
 		
 	}
 	
@@ -47,30 +64,45 @@ public class AddressBook {
 		
 		return contact;
 	}
+	public void updateAddressBookFile() {
+		StringBuffer contactBuffer=new StringBuffer();
+		contactList.forEach(contact->{
+			String employeeDataString=contact.toString().concat("\n");
+			contactBuffer.append(employeeDataString);
+		});
+		try {
+			Files.write(Paths.get(ADDRESS_BOOK_FILE), contactBuffer.toString().getBytes());
+		}
+		catch(IOException e) {
+			System.out.println("File not accessible");
+		}
+	}
 	
 	public void addContact(Contact contact) {
-		List<Contact> result = contact_list.stream().filter(c->c.equals(contact)).collect(Collectors.toList()); 
+		List<Contact> result = contactList.stream().filter(c->c.equals(contact)).collect(Collectors.toList()); 
 		if(result.size()>0)
 		{
 			System.out.println("This contact already exits in this particular address book");
 		}
-		else
-			this.contact_list.add(contact);
-		
-		
-		if(AddressBookMain.citytocontact.containsKey(contact.getCity())) {
-			AddressBookMain.citytocontact.get(contact.getCity()).add(contact);
-		}
-		else {
-			AddressBookMain.citytocontact.put(contact.getCity(), new ArrayList<Contact>());
-			AddressBookMain.citytocontact.get(contact.getCity()).add(contact);
+		else{
+			this.contactList.add(contact);
+			updateAddressBookFile();	 
 		}
 		
-		if(AddressBookMain.statetocontact.containsKey(contact.getState()))
-			AddressBookMain.statetocontact.get(contact.getState()).add(contact);
+		
+		if(AddressBookMain.cityToContact.containsKey(contact.getCity())) {
+			AddressBookMain.cityToContact.get(contact.getCity()).add(contact);
+		}
 		else {
-			AddressBookMain.statetocontact.put(contact.getState(), new ArrayList<Contact>());
-			AddressBookMain.statetocontact.get(contact.getState()).add(contact);	
+			AddressBookMain.cityToContact.put(contact.getCity(), new ArrayList<Contact>());
+			AddressBookMain.cityToContact.get(contact.getCity()).add(contact);
+		}
+		
+		if(AddressBookMain.stateToContact.containsKey(contact.getState()))
+			AddressBookMain.stateToContact.get(contact.getState()).add(contact);
+		else {
+			AddressBookMain.stateToContact.put(contact.getState(), new ArrayList<Contact>());
+			AddressBookMain.stateToContact.get(contact.getState()).add(contact);	
 		}
 		
 	}
@@ -83,10 +115,10 @@ public class AddressBook {
 		int index=0;
 		int i,n;
 		
-		n=contact_list.size();
+		n=contactList.size();
 		
 		for(i=0;i<n;i++) {
-			if(contact_list.get(i).getFirst_Name().equals(first_name))
+			if(contactList.get(i).getFirst_Name().equals(first_name))
 				index=i;
 			
 		}
@@ -107,28 +139,29 @@ public class AddressBook {
 		
 		switch(choice) {
 		case 1:System.out.println("Enter last name for editing");
-			   contact_list.get(index).setLast_Name(s.next());
+			   contactList.get(index).setLast_Name(s.next());
 			   break;
 		case 2:System.out.println("Enter Address for editing");
-		   	   contact_list.get(index).setAddress(s.next());
+		       contactList.get(index).setAddress(s.next());
 		   	   break;
 		case 3:System.out.println("Enter city for editing");
-			   contact_list.get(index).setCity(s.next());
+		       contactList.get(index).setCity(s.next());
 			   break;
 		case 4:System.out.println("Enter state for editing");
-			   contact_list.get(index).setState(s.next());
+		       contactList.get(index).setState(s.next());
 			   break;
 		case 5:System.out.println("Enter Zip for editing");
-			   contact_list.get(index).setZip(s.nextInt());
+		       contactList.get(index).setZip(s.nextInt());
 			   break;
 		case 6:System.out.println("Enter Phone Number for editing");
-			   contact_list.get(index).setPhoneNumber(s.nextLong());
+		       contactList.get(index).setPhoneNumber(s.nextLong());
 			   break;
 		case 7:System.out.println("Enter email for editing");
-			   contact_list.get(index).setEmail(s.next());
+		       contactList.get(index).setEmail(s.next());
 			   break;
 		   	   
 		}
+		updateAddressBookFile();
 		}	
 	}
 	public void deleteContact() {
@@ -137,47 +170,50 @@ public class AddressBook {
 		Scanner s=new Scanner(System.in);
 		System.out.println("Enter name of contact to be deleted");
 		String first_name=s.next();
-		n=contact_list.size();
+		n=contactList.size();
 		
 		for(i=0;i<n;i++) {
-			if(contact_list.get(i).getFirst_Name().equals(first_name))
+			if(contactList.get(i).getFirst_Name().equals(first_name))
 				index=i;
 			
 		}
-		contact_list.remove(index);
+		contactList.remove(index);
+		updateAddressBookFile();
 		return ;
 	}
 	public void showContacts() {
 		
-		for(int i=0;i<contact_list.size();i++) {
-			Contact c=contact_list.get(i);
-			System.out.println("First Name "+c.getFirst_Name()+" Last Name "+c.getLast_Name()+" Address:"+c.getAddress()+" City :"+c.getCity()+" State: "+c.getState()+" Phone :"+c.getPhoneNumber()+" Email:"+c.getEmail()+" Zip: "+c.getZip());
+		try {
+			Files.lines(new File(ADDRESS_BOOK_FILE).toPath()).forEach(System.out::println);
 		}
-		
+		catch(IOException e) {
+			System.out.println("Error in reading file");
+		}
 	}
 	public  static void getSortedContactListByName(String AddressBookName) {
-		 hm.get(AddressBookName).contact_list
+		 hm.get(AddressBookName).contactList
 		 .stream() 
          .sorted((c1, c2)->c1.getFirst_Name().compareTo(c2.getFirst_Name())) 
          .map(contact->contact.toString())
          .forEach(System.out::println); 
+		
 	}
 	public static void getSortedContactListByCity(String AddressBookName){
-		hm.get(AddressBookName).contact_list
+		hm.get(AddressBookName).contactList
 		 .stream() 
         .sorted((c1, c2)->c1.getCity().compareTo(c2.getCity())) 
         .map(contact->contact.toString())
         .forEach(System.out::println); 
 	}
 	public static void getSortedContactListByState(String AddressBookName){
-		hm.get(AddressBookName).contact_list
+		hm.get(AddressBookName).contactList
 		 .stream() 
         .sorted((c1, c2)->c1.getState().compareTo(c2.getState())) 
         .map(contact->contact.toString())
         .forEach(System.out::println); 
 	}
 	public static void getSortedContactListByZip(String AddressBookName) {
-		hm.get(AddressBookName).contact_list
+		hm.get(AddressBookName).contactList
 		 .stream() 
        .sorted((c1, c2)->((Integer)c1.getZip()).compareTo((Integer)c2.getZip())) 
        .map(contact->contact.toString())

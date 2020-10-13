@@ -1,11 +1,12 @@
 package com.capgemini;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookMain {
-	public static Map<String,List<Contact>> citytocontact= new HashMap<String,List<Contact>>(); 
-	public static Map<String,List<Contact>> statetocontact= new HashMap<String,List<Contact>>(); 
+	public static Map<String,List<Contact>> cityToContact= new HashMap<String,List<Contact>>(); 
+	public static Map<String,List<Contact>> stateToContact= new HashMap<String,List<Contact>>(); 
 	
 	public static void main(String[] args) {
 		
@@ -36,66 +37,71 @@ public class AddressBookMain {
 				break;
 			
 			switch(choice) {
-			case 1:show_all_address_books_name();
+			case 1:showAllAddressBooksName();
 				   System.out.println("Enter the name of particular address book to add person details");
 				   String addressBook_name1=s.next();
 				   AddressBook addressbook1=AddressBook.hm.get(addressBook_name1);
 				   Contact contact=addressbook1.createContact();
 				   addressbook1.addContact(contact);
 				   break;
-			case 2:show_all_address_books_name();
+			case 2:showAllAddressBooksName();
 			       System.out.println("Enter the name of particular address book to edit person details");
 			       String addressBook_name2=s.next();
 			       AddressBook addressbook2=AddressBook.hm.get(addressBook_name2);
 			       addressbook2.editContact();
 			       System.out.println("Editing done");
 			       break;
-			case 3:show_all_address_books_name();
+			case 3:showAllAddressBooksName();
 			   	   System.out.println("Enter the name of particular address book to add person details");
-			       String addressBook_name3=s.next();
-			       AddressBook addressbook3=AddressBook.hm.get(addressBook_name3);
+			       String addressBookName3=s.next();
+			       AddressBook addressbook3=AddressBook.hm.get(addressBookName3);
 			       addressbook3.deleteContact();
 			       System.out.println("deletion done");
 			       break;
-			case 4:show_all_address_books_name();
+			case 4:showAllAddressBooksName();
 		   	       System.out.println("Enter the name of particular address book to add person details");
-		           String addressBook_name4=s.next();
-		           AddressBook addressbook4=AddressBook.hm.get(addressBook_name4);
+		           String addressBookName4=s.next();
+		           AddressBook addressbook4=AddressBook.hm.get(addressBookName4);
 		           addressbook4.showContacts();
 		           break;
 			case 5:System.out.println("Enter name of address book to be created");
 				   String name=s.next();
-				   AddressBook addressbook=new AddressBook(name);
-				   AddressBook.hm.put(name,addressbook);
+				   try {
+				   AddressBook addressBook=new AddressBook(name);
+				   AddressBook.hm.put(name,addressBook);}
+				   catch(IOException e) {
+					   System.out.println("Error while creating address book");
+				   }
 				   System.out.println("Address Book created successfully");
+				   
 				   break;
 			case 6:System.out.println("Enter the city name");
 				   String city=s.next();
-				   search_by_city_name(city);
+				   searchByCityName(city);
 				   break;
 			case 7:System.out.println("Enter the state name");
 			       String state=s.next();
-			       search_by_state_name(state);
+			       searchByStateName(state);
 			       break;
 			case 8:System.out.println("Enter city name");
-				   System.out.println(citytocontact.get(s.next()).size());
+				   System.out.println(cityToContact.get(s.next()).size());
 				   break;
 			case 9:System.out.println("Enter state name");
-				   System.out.println(statetocontact.get(s.next()).size());
+				   System.out.println(stateToContact.get(s.next()).size());
 				   break;
-			case 10:show_all_address_books_name();
+			case 10:showAllAddressBooksName();
 				    System.out.println("Enter address book");
 				    AddressBook.getSortedContactListByName(s.next());
 				    break;
-			case 11:show_all_address_books_name();
+			case 11:showAllAddressBooksName();
 				    System.out.println("Enter address book");
 				    AddressBook.getSortedContactListByCity(s.next());
 				    break;
-			case 12:show_all_address_books_name();
+			case 12:showAllAddressBooksName();
 				    System.out.println("Enter address book");
 				    AddressBook.getSortedContactListByState(s.next());
 				    break;
-			case 13:show_all_address_books_name();
+			case 13:showAllAddressBooksName();
 				    System.out.println("Enter address book");
 				    AddressBook.getSortedContactListByZip(s.next());
 				    break;
@@ -109,21 +115,21 @@ public class AddressBookMain {
 		
 	}
 	
-	public static void show_all_address_books_name() {
+	public static void showAllAddressBooksName() {
 		
 		for (Map.Entry<String,AddressBook> entry : AddressBook.hm.entrySet())  
             System.out.println(entry.getKey()); 
 	}
 	
-	public static void search_by_city_name(String city) {
+	public static void searchByCityName(String city) {
 		
-		List<Contact> contacts=citytocontact.get(city);
+		List<Contact> contacts=cityToContact.get(city);
 		contacts.stream().map(contact -> contact.toString()).forEach(System.out::println); 
 	}
 	
-	public static void search_by_state_name(String state) {
+	public static void searchByStateName(String state) {
 		
-		List<Contact> contacts=statetocontact.get(state);
+		List<Contact> contacts=stateToContact.get(state);
 		contacts.stream().map(contact -> contact.toString()).forEach(System.out::println); 	
 	}
 	

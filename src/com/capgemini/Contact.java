@@ -1,24 +1,24 @@
 package com.capgemini;
 
 public class Contact {
-	private String first_name;
-	private String last_name;
+	private String firstName;
+	private String lastName;
 	private String address;
 	private String city;
 	private String state;
 	private int zip;
-	private long phone_number;
+	private long phoneNumber;
 	private String email;
 	
 	
-	public Contact(String first_name,String last_name,String address,String city,String state,int zip,long phone_number,String email) {
-		this.first_name=first_name;
-		this.last_name=last_name;
+	public Contact(String firstName,String lastName,String address,String city,String state,int zip,long phoneNumber,String email) {
+		this.firstName=firstName;
+		this.lastName=lastName;
 		this.address=address;
 		this.city=city;
 		this.state=state;
 		this.zip=zip;
-		this.phone_number=phone_number;
+		this.phoneNumber=phoneNumber;
 		this.email=email;
 	}
 	public boolean equals(Object object) {
@@ -30,24 +30,24 @@ public class Contact {
             return false; 
         } 
         Contact contact = (Contact) object; 
-        if(this.first_name.equals(contact.first_name))
+        if(this.firstName.equals(contact.firstName))
         	return true;
         else return false;		
 	}
 	public String toString() {
-		return "First Name: "+first_name+" Last Name:  "+last_name+" city : "+city+" state : "+state+" pincode: "+zip;
+		return "First Name: "+firstName+" Last Name:  "+lastName+" city : "+city+" state : "+state+" pincode: "+zip+" email:"+email+" Phone number:"+phoneNumber;
 	}
 	public void setFirst_Name(String first_name) {
-		this.first_name=first_name;
+		this.firstName=first_name;
 	}
 	public String getFirst_Name() {
-		return this.first_name;
+		return this.firstName;
 	}
 	public void setLast_Name(String last_name) {
-		this.last_name=last_name;
+		this.lastName=last_name;
 	}
 	public String getLast_Name(){
-		return last_name;
+		return lastName;
 	}
 	public void setAddress(String address) {
 		this.address=address;
@@ -75,10 +75,10 @@ public class Contact {
 		return this.zip;
 	}
 	public void setPhoneNumber(long phone_number){
-		this.phone_number=phone_number;
+		this.phoneNumber=phone_number;
 	}
 	public long getPhoneNumber() {
-		return this.phone_number;
+		return this.phoneNumber;
 	}
 	public void setEmail(String email) {
 		this.email=email;
